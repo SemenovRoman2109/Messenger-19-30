@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %} 
+    <h1>Кімната чату</h1>
+    <input type="text" placeholder="Повідомлення">
+    <button>send</button>
+    <script src = "{% static 'chat_app/js/chat.js' %}"></script>
+{%endblock%}
