@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Реєстрація
+{% endblock %}
+
+{% block meta %}
+    <meta name="csrf_token" content = '{{ csrf_token }}'>
+{% endblock %}
+
+{% block content %}
+    <div>
+        {% include 'user_app/parts/form_login.html'%}
+        {% include 'user_app/parts/form_confirm_email.html'%}
+        {% include 'user_app/parts/form_registration.html'%}
+    </div>
+{% endblock %}
+
+{% block scripts%}
+    <script src = '{% static "user_app/js/auth.js"%}'></script>
+{% endblock %}

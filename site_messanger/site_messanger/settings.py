@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'chat_app'
+    'chat_app',
+    'user_app'
 ]
 
 MIDDLEWARE = [
@@ -125,8 +126,12 @@ STATICFILES_DIRS = [BASE_DIR/'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Налаштування WS
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': "channels.layers.InMemoryChannelLayer"
     }
-}# в settings.py, щоб вказати де зберігати канали для WS 
+}
+
+
+AUTH_USER_MODEL = 'user_app.User'
