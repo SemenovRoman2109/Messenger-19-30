@@ -8,7 +8,10 @@
     </head>
     <body>
         <header>
-            <nav></nav>
+            <nav>
+                <a href = '{% url "chat" %}'>Чат</a>
+                <a href = '{% url "auth" %}'>Реєстрація</a>
+            </nav>
             {% block header%}{% endblock %}
         </header>
         {% block content%}{% endblock %}

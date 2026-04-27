@@ -1,0 +1,7 @@
+<h2>Авторизація</h2>
+<div id="loginErrorContainer"></div>
+<form method = 'post' action="{% url 'login' %}"  id = 'formLogin'>
+    {{ form_login.as_p }}
+    <button>Авторизуватись</button> 
+</form>
+<button id="toRegistration">Перейти до реєстрації</button>

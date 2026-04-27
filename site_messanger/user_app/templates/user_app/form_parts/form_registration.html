@@ -1,0 +1,7 @@
+<h2>Реєстрація</h2>
+<div id="registerErrorContainer"></div>
+<form method = 'post' action="{% url 'register' %}" id = 'formRegister'>
+    {{ form_register.as_p }}
+    <button>Зареєструватись</button>
+</form>
+<button id="toLogin">Перейти до авторизацї</button>

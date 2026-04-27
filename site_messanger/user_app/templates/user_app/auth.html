@@ -6,14 +6,20 @@
 {% endblock %}
 
 {% block meta %}
-    <meta name="csrf_token" content = '{{ csrf_token }}'>
+    <meta name="csrfToken" content = '{{ csrf_token }}'>
 {% endblock %}
 
 {% block content %}
-    <div>
-        {% include 'user_app/parts/form_login.html'%}
-        {% include 'user_app/parts/form_confirm_email.html'%}
-        {% include 'user_app/parts/form_registration.html'%}
+    <div id= "containerRegistration">
+        {% include 'user_app/form_parts/form_registration.html'%}
+    </div>
+    
+    <div id="containerLogin" style="display: none;">
+        {% include 'user_app/form_parts/form_login.html'%}
+    </div>
+
+    <div id="containerConfirmEmail" style="display: none;">
+        {% include 'user_app/form_parts/form_confirm_email.html'%}
     </div>
 {% endblock %}
 
