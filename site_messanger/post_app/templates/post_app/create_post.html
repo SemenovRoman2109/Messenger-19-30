@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content%}
+    <h1>Створити публікацію </h1>
+    <form method = 'post' action="">
+        {% csrf_token %}
+        {{form.as_p}} 
+        <div id = 'links-list'>
+            <input type="url" name="link" placeholder="enter link">
+        </div>
+        <button type="button" id = 'add-link'>+</button>
+        <button type="submit">Відправити</button>
+    </form>  
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'post_app/js/create_post.js' %}"></script>
+{% endblock %}
