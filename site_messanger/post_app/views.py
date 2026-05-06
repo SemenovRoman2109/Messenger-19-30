@@ -12,9 +12,10 @@ class PostCreateView(FormView):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        if self.request == "POST":
+        if self.request.method == "POST":
             kwargs["links"] = self.request.POST.getlist(key = "link")
+            kwargs["images"] = self.request.FILES.getlist(key = "images")
         
         return kwargs
-    
+     
     # get_form_kwargs - метод в класі FormView, який допомагає вказати додаткові дані які буде відправленно в форму

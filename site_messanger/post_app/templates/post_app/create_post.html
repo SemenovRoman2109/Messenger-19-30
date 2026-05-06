@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block meta %}
+    <meta name="csrfToken" content = '{{ csrf_token }}'>
+{% endblock %}
+
 {% block content%}
     <h1>Створити публікацію </h1>
     <form method = 'post' action="">
-        {% csrf_token %}
         {{form.as_p}} 
         <div id = 'links-list'>
             <input type="url" name="link" placeholder="enter link">

@@ -22,3 +22,8 @@ class PostLink(models.Model):
     post = models.ForeignKey(Post, on_delete= models.CASCADE, related_name= 'links') 
     def __str__(self):
         return self.url
+
+class PostImage(models.Model):
+    original_image = models.ImageField(blank= True)
+    compressed_image = models.ImageField(blank= True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name= 'images')
