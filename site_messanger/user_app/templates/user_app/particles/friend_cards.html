@@ -1,0 +1,19 @@
+{% for user in users %}
+    <div class="user">
+        <h3>{{ user.email }}</h3>
+
+        {% if section == "requests" %}
+            <button>Підтвердити</button>
+            <button>Відхилити</button>
+
+        {% elif section == "friends" %}
+            <button>Повідомлення</button>
+            <button>Видалити</button>
+
+        {% elif section == "recommendations" %}
+            <button>Дотати</button>
+            
+        {% endif %}
+
+    </div>
+{% endfor %}

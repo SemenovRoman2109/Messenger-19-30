@@ -9,9 +9,14 @@
     <body>
         <header>
             <nav>
-                <a href = '{% url "chat" %}'>Чат</a>
-                <a href = '{% url "auth" %}'>Реєстрація</a>
-                <a href = '{% url "post_create" %}'>Створити публікацію</a>
+                <a href = '{% url "post_list" %}'>Список публікацій</a>
+                {% if user.is_authenticated %}
+                    <a href = '{% url "chat" %}'>Чат</a>
+                    <a href = '{% url "post_create" %}'>Створити публікацію</a>
+                    <a href = '{% url "friends" %}'>Друзі</a>
+                {% else %}                 
+                    <a href = '{% url "auth" %}'>Реєстрація</a>
+                {% endif %}
             </nav>
             {% block header%}{% endblock %}
         </header>

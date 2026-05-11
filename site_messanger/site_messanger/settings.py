@@ -139,3 +139,5 @@ AUTH_USER_MODEL = 'user_app.User'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR/ 'media'
+
+LOGIN_URL = '/auth/'
