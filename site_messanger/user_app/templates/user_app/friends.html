@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Друзі{% endblock %}
 
-
 {% block content%}
-    {% include 'user_app/particles/friends_nav.html' %}
-    {% include 'user_app/particles/friends_home.html' %}
+    {% include 'user_app/particles/friends/friends_nav.html' %}
+    {% include 'user_app/particles/friends/friends_home.html' %}
+    {% include 'user_app/particles/friends/friends_section.html' %}
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{% static 'user_app/js/friend_section.js' %}"></script>
 {% endblock %}

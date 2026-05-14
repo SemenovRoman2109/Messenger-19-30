@@ -1,0 +1,11 @@
+<main id="all-sections">
+    {% for key, section in sections.items %}
+        <div class="section">
+            <h2>{{section.title}}</h2>
+            <button data-section-link="{{ key }}">Дивитись усі</button>
+        </div>
+        <div class="cards">
+            {% include 'user_app/particles/friends/friend_cards.html' with users=section.users section=key %}
+        </div>
+    {% endfor %}
+</main>

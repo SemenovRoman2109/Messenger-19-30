@@ -5,6 +5,9 @@ from django.http import JsonResponse
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .utils.friends import get_friends_by_section
+from django.core.paginator import Paginator
+from django.template.loader import render_to_string
+
 
 # Create your views here.
 class AuthView(TemplateView):
@@ -54,10 +57,23 @@ class FriendsView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         context['sections'] = {
-            'requests': {"title" : 'Запити', "users": get_friends_by_section(current_user = self.request.user, section = "requests")},
-            'recommendations': {"title" : 'Рекомендації', "users": get_friends_by_section(current_user = self.request.user, section = "recommendations")},
-            'friends': {"title" : 'Друзі', "users": get_friends_by_section(current_user = self.request.user, section = "friends")},
+            'requests': {"title" : 'Запити', "users": get_friends_by_section(current_user = self.request.user, section = "requests")[:6]},
+            'recommendations': {"title" : 'Рекомендації', "users": get_friends_by_section(current_user = self.request.user, section = "recommendations")[:6]},
+            'friends': {"title" : 'Друзі', "users": get_friends_by_section(current_user = self.request.user, section = "friends")[:6]},
         }
         
         return context
+    
+class FriendsSectionView(View):
+    def get(self, request, section):
+        users = get_friends_by_section(current_user=request.user, section = section)
+        page_num = request.GET.get('page')
+        page = Paginator(users, 10).get_page(page_num)
+        html = render_to_string(
+            'user_app/particles/friends/friend_cards.html',
+            {'users': page.object_list, 
+             'section': section}
+        )
+        return JsonResponse({'html': html, "has_next": page.has_next()})
+        
 # LoginRequiredMixin - клас потрібно успадковувати, щоб на сторінку могли зайти лише авторизовані (імпортувати з django.contrib.auth.mixins)
