@@ -4,7 +4,7 @@
             <h2>{{section.title}}</h2>
             <button data-section-link="{{ key }}">Дивитись усі</button>
         </div>
-        <div class="cards">
+        <div class="cards" id = 'card-{{key}}'>
             {% include 'user_app/particles/friends/friend_cards.html' with users=section.users section=key %}
         </div>
     {% endfor %}

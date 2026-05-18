@@ -28,7 +28,9 @@ async function loadSection(section, page) {
     if (hasNext == false){
         friendsObserver.disconnect()
     }
-    currentSectionLoadLine.insertAdjacentHTML('beforebegin', data.html)
+    currentSectionList.insertAdjacentHTML('beforeend', data.html)
+    // currentSectionLoadLine.insertAdjacentHTML('beforebegin', data.html)
+    createActionButtonEvent()
     isLoading = false
 }
 
@@ -38,9 +40,7 @@ async function openSection(section){
     currentSection.style.display = 'flex'
     currentSectionTitle.textContent = titles[section]
     currentPage = 1
-    document.querySelectorAll("#current-section .user").forEach(user=>{
-        user.remove()
-    })
+    currentSectionList.innerHTML = ""
     friendsObserver.observe(currentSectionLoadLine)
     await loadSection(section, currentPage)
 }
@@ -56,7 +56,7 @@ const friendsObserver = new IntersectionObserver(async (entries)=>{
         await loadSection(currentSectionName, currentPage)
     }
 }, {
-    rootMargin: "200px"
+    rootMargin: "80px"
 })
 
 sectionButtons.forEach((sectionButton) => {

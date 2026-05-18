@@ -9,7 +9,11 @@
     {% include 'user_app/particles/friends/friends_section.html' %}
 {% endblock %}
 
+{% block meta %}
+    <meta name="csrfToken" content = '{{ csrf_token }}'>
+{% endblock %}
 
 {% block scripts %}
     <script src="{% static 'user_app/js/friend_section.js' %}"></script>
+    <script src="{% static 'user_app/js/friend_action.js' %}"></script>
 {% endblock %}

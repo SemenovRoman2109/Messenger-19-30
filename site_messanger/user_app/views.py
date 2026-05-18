@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .utils.friends import get_friends_by_section
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
+from .utils.friends_actions import *
 
 
 # Create your views here.
@@ -64,16 +65,35 @@ class FriendsView(LoginRequiredMixin, TemplateView):
         
         return context
     
-class FriendsSectionView(View):
+class FriendsSectionView(LoginRequiredMixin, View):
     def get(self, request, section):
         users = get_friends_by_section(current_user=request.user, section = section)
         page_num = request.GET.get('page')
-        page = Paginator(users, 10).get_page(page_num)
+        page = Paginator(users, 15).get_page(page_num)
         html = render_to_string(
             'user_app/particles/friends/friend_cards.html',
             {'users': page.object_list, 
              'section': section}
         )
         return JsonResponse({'html': html, "has_next": page.has_next()})
+
+class FriendsActionView(LoginRequiredMixin, View):
+    def post(self, request, action, user_id):
+        other_user = User.objects.get(id = user_id)
+        user = request.user
+
+        if action == "add":
+            return JsonResponse(add_friend_request(user, other_user))
+        elif action == 'delete':
+            return JsonResponse(delete_friendship(user, other_user))
+        elif action == 'ignore':
+            return JsonResponse(ignore_friendship(user, other_user))
+        elif action == 'accept':
+            data = accept_friend_request(user, other_user)
+            data['friend_html'] = render_to_string(
+                'user_app/particles/friends/friend_cards.html',
+                {'users': [other_user], 'section': 'friends'}
+            )
+            return JsonResponse(data)
         
-# LoginRequiredMixin - клас потрібно успадковувати, щоб на сторінку могли зайти лише авторизовані (імпортувати з django.contrib.auth.mixins)
+
