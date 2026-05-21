@@ -1,17 +1,34 @@
-let url = `ws://${window.location.host}/chat`
-const socket = new WebSocket(url)
-const input = document.querySelector('input')
-const button = document.querySelector('button')
-let body = document.querySelector('body')
+const chatBtns = document.querySelectorAll(".chat")
+const chat = document.querySelector("#chat")
+const notSelectContainer = document.querySelector("#not-select")
+let chatSocket;
 
-socket.onmessage = function(event){
-    const data = JSON.parse(event.data)
-    let text = document.createElement("h3")
-    text.textContent = data.message
-    body.append(text)
-}
+chatBtns.forEach(btn => {
+    btn.addEventListener('click', ()=>{
+        notSelectContainer.style.display = "none"
+        chat.style.display = "flex"
+        if (chatSocket){
+            chatSocket.close()
+        }
+        let chatId = btn.dataset.id
+        let url = `ws://${window.location.host}/chat/${chatId}`;
+        chatSocket = new WebSocket(url)
+        chatSocket.onmessage = (event)=>{
+            const data = JSON.parse(event.data)
+            console.log(data);
+            
+        }
+    })
+})
 
-button.addEventListener('click', ()=>{
-    socket.send(JSON.stringify({message: input.value}))
-    input.value = ''
+const sendMsg = document.querySelector("#send-msg")
+const msgInput = document.querySelector("#msg-input")
+
+sendMsg.addEventListener("click", ()=>{
+    chatSocket.send(
+        JSON.stringify({
+            "msg": msgInput.value
+        })
+    )
+    msgInput.value = ''
 })
