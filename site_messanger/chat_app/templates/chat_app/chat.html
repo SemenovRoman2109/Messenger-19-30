@@ -1,7 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block meta%}
+    <meta name="csrfToken" content = '{{ csrf_token }}'>    
+{% endblock %}
+
 {% block content %} 
+    <h1>Друзі</h1>
+    <div id="friends" style="max-height: 200px; overflow-y: auto; border: 2px solid red; padding: 10px;">
+        {% for friend in friends %}
+            <div class="friend-div" data-id="{{ friend.id }}">
+                <h3 class="friend-object">{{ friend.email }}</h3>
+            </div>
+        {% endfor %}
+    </div>
     <div id="indiv-chats">
         <h1>Повідомлення</h1>
         {% for chat_data in individual_chats %}
