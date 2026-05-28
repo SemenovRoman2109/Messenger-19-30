@@ -4,7 +4,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Chat, User
 from user_app.utils.friends import get_friends_by_section
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 import json
+
+
 # Create your views here.
 
 class ChatView(LoginRequiredMixin, TemplateView):
@@ -38,3 +41,27 @@ class CreateChatView(LoginRequiredMixin, View):
             is_new_chat = True  
         print(chat)
         return JsonResponse({ "chat_id" : chat.id, "friend_email" : friend.email, 'is_new': is_new_chat})
+
+
+class GetMessagesView(View):
+    def get(self, request, chat_id, *args, **kwargs):
+        chat = Chat.objects.filter(id = chat_id, users = request.user).first()
+        if chat:
+            page_number = request.GET.get("page")
+            messages = chat.messages.order_by('-created_at')
+            paginator = Paginator(messages, 20)
+            message_list = paginator.get_page(page_number)
+            if int(page_number) > paginator.num_pages:
+                return JsonResponse({"success" : False})
+            else:
+                message_data_list = []
+                for message in message_list:
+                    message_data_list.append({
+                        'sender': message.sender.email,
+                        'text': message.text,
+                        'datetime': message.created_at.isoformat(),
+                    })
+                return JsonResponse({
+                    "success" : True,
+                    "messages": message_data_list
+                })

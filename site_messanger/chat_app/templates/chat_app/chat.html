@@ -5,33 +5,41 @@
     <meta name="csrfToken" content = '{{ csrf_token }}'>    
 {% endblock %}
 
+{%block links%}
+    <link rel = 'stylesheet' href = '{% static "chat_app/css/chat.css" %}'>
+{% endblock %}
+
 {% block content %} 
-    <h1>Друзі</h1>
-    <div id="friends" style="max-height: 200px; overflow-y: auto; border: 2px solid red; padding: 10px;">
-        {% for friend in friends %}
-            <div class="friend-div" data-id="{{ friend.id }}">
-                <h3 class="friend-object">{{ friend.email }}</h3>
-            </div>
-        {% endfor %}
-    </div>
-    <div id="indiv-chats">
-        <h1>Повідомлення</h1>
-        {% for chat_data in individual_chats %}
-            <div class="chat" data-id="{{ chat_data.chat_id }}" style="border: 2px solid black; padding: 12px; width: max-content; cursor: pointer; margin: 10px;">
-                <h3>{{ chat_data.other_user.email }}</h3>
-            </div>
-        {% endfor %}
-    </div> 
-    <div id="not-select">
-        <h1 style="text-align: center;">Почніть нове спілкування</h1>
-        <p style="text-align: center;">Оберіть контакт зі списку ліворуч <br> або створіть групу, щоб почати спілкування</p>
-    </div>
-    <div id="chat" style="display: none; margin: 100px;">
-        <div id="messages"></div>
-        <div id="control-elements">
-            <input type="text" id="msg-input">
-            <button id="send-msg">Send</button>
+    <main>
+        <h1>Друзі</h1>
+        <div id="friends" style="max-height: 200px; overflow-y: auto; border: 2px solid red; padding: 10px;">
+            {% for friend in friends %}
+                <div class="friend-div" data-id="{{ friend.id }}">
+                    <h3 class="friend-object">{{ friend.email }}</h3>
+                </div>
+            {% endfor %}
         </div>
-    </div>
+        <div id="indiv-chats">
+            <h1>Повідомлення</h1>
+            {% for chat_data in individual_chats %}
+                <div class="chat" data-id="{{ chat_data.chat_id }}" style="border: 2px solid black; padding: 12px; width: max-content; cursor: pointer; margin: 10px;">
+                    <h3>{{ chat_data.other_user.email }}</h3>
+                </div>
+            {% endfor %}
+        </div> 
+        <div id="not-select">
+            <h1 style="text-align: center;">Почніть нове спілкування</h1>
+            <p style="text-align: center;">Оберіть контакт зі списку ліворуч <br> або створіть групу, щоб почати спілкування</p>
+        </div>
+        <div id="chat" style="display: none; ">
+            <div id="messages">
+                <div id="load-message-line"></div>
+            </div>
+            <div id="control-elements">
+                <input type="text" id="msg-input">
+                <button id="send-msg">Send</button>
+            </div>
+        </div>
+    </main>
     <script src = "{% static 'chat_app/js/chat.js' %}"></script>
 {%endblock%}
