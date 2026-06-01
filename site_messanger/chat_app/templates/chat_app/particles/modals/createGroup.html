@@ -1,0 +1,18 @@
+<div id="createGroup">
+    <button class="close-modal">x</button>
+    <h2>Нова група</h2>
+
+    <p id="selectCount">Вибрано: 0</p>
+
+    <div class="friends-div">
+        {% for friend in friends %}
+            <label class="user-item">
+                <h4>{{ friend.email }}</h4>
+                <input value="{{ friend.id }}" class="select-friend" type="checkbox">
+            </label>
+        {% endfor %}
+    </div>
+    
+    <button type="button" class="close-modal">Скасувати</button>
+    <button type="button" class="next-modal">Далі</button>
+</div>

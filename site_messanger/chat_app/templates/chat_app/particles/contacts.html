@@ -1,0 +1,11 @@
+<aside class="chat-contacts">
+    <button id="open-group-modal" type="button">Створити груповий чат</button>
+    <section class="chat-block">
+        <h2>Контакти</h2>
+        {% for friend in friends %}
+            <button type="button" class="chat-user-button friend-div" data-id="{{ friend.id }}">
+                {{ friend.email }}
+            </button>
+        {% endfor %}
+    </section>
+</aside>

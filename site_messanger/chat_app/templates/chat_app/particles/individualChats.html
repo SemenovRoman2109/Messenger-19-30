@@ -1,0 +1,8 @@
+<section class="chat-block" id="indiv-chats">
+    <h2>Повідомлення</h2>
+    {% for chat_data in individual_chats %}
+        <button class="chat chat-user-button" data-id="{{ chat_data.chat_id }}">
+            {{ chat_data.other_user.email }}
+        </button>
+    {% endfor %}
+</section>

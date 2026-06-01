@@ -59,7 +59,8 @@ class GetMessagesView(View):
                     message_data_list.append({
                         'sender': message.sender.email,
                         'text': message.text,
-                        'datetime': message.created_at.isoformat(),
+                        'date': message.created_at.date(),
+                        'time': str(message.created_at.timetuple().tm_hour) + ":" + str(message.created_at.timetuple().tm_min)
                     })
                 return JsonResponse({
                     "success" : True,
