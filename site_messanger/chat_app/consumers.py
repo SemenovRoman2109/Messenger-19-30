@@ -52,9 +52,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'sender': new_message.sender.email,
             'text': new_message.text,
             'date': str(new_message.created_at.date()),
-            'time': str(new_message.created_at.timetuple().tm_hour) + ":" + str(new_message.created_at.timetuple().tm_min)
-            # "sender_image_url": new_message.sender.avatar.url
+            'time': str(new_message.created_at.timetuple().tm_hour) + ":" + str(new_message.created_at.timetuple().tm_min),
+            'images': []
         }
+            # "sender_image_url": new_message.sender.avatar.url
         
     async def send_message(self, data):
         await self.send(text_data= json.dumps(data))

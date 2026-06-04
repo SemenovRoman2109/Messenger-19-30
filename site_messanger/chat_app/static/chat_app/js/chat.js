@@ -20,7 +20,7 @@ async function loadMessages(){
     
     if (data.success){
         data.messages.forEach((message)=>{
-            createMessage(message.sender, message.text, message.date, message.time, false)
+            createMessage(message.sender, message.text, message.date, message.time, message.images,  false)
         })
         createDateMessage()
     }else if (observer != null){
@@ -28,7 +28,7 @@ async function loadMessages(){
     }
 }
 
-function createMessage(sender, text, date, time, isNew = true){
+function createMessage(sender, text, date, time, images, isNew = true){
     const newMessage = document.createElement('div')
     newMessage.classList.add('message')
     newMessage.innerHTML = `
@@ -36,6 +36,13 @@ function createMessage(sender, text, date, time, isNew = true){
         <h3>${text}</h3>
         <h6>${time}</h6>
     `
+    if (images){
+        images.forEach(imageUrl =>{
+            const newImage = document.createElement("img") 
+            newImage.src = imageUrl
+            newMessage.append(newImage)
+        })
+    }
     newMessage.dataset.date = date
     if(isNew){
         messages.appendChild(newMessage)
@@ -66,7 +73,7 @@ function openChat(id){
         const data = JSON.parse(event.data)
         
         if (data.message){
-            createMessage(data.message.sender, data.message.text, data.message.date, data.message.time)
+            createMessage(data.message.sender, data.message.text, data.message.date, data.message.time, data.message.images)
             messages.scrollTop = messages.scrollHeight
             createDateMessage()
         }
@@ -91,14 +98,36 @@ chatBtns.forEach(btn => {
 
 const sendMsg = document.querySelector("#send-msg")
 const msgInput = document.querySelector("#msg-input")
+const msgImageInput = document.querySelector("#message-files")
 
-sendMsg.addEventListener("click", ()=>{
-    chatSocket.send(
-        JSON.stringify({
-            "msg": msgInput.value
+sendMsg.addEventListener("click", async ()=>{
+    if (msgImageInput.files.length > 0){
+        const formData = new FormData()
+        formData.append("text", msgInput.value)
+        formData.append("chat_id", chatId )
+
+        const files = Array.from(msgImageInput.files)
+        files.forEach(file =>{
+            formData.append("image", file) 
         })
-    )
+
+        const response = await fetch('/chat/create/message/', {
+            method: "POST",
+            headers: {
+                'X-CSRFToken' : csrfToken,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: formData
+        })
+    }else{
+        chatSocket.send(
+            JSON.stringify({
+                "msg": msgInput.value
+            })
+        )
+    }
     msgInput.value = ''
+    msgImageInput.value = ''
 })
 
 friendDivs.forEach(div => {

@@ -1,0 +1,8 @@
+<section class="chat-block" id="group-chats">
+    <h2>Групові чати</h2>
+    {% for chat in group_chats %}
+        <button class="chat chat-user-button" data-id="{{ chat.id }}">
+            {{ chat.name}}
+        </button>
+    {% endfor %}
+</section>
