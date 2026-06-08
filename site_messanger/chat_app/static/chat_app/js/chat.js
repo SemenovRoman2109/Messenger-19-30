@@ -39,6 +39,7 @@ function createMessage(sender, text, date, time, images, isNew = true){
     if (images){
         images.forEach(imageUrl =>{
             const newImage = document.createElement("img") 
+            newImage.classList.add('chat-image')
             newImage.src = imageUrl
             newMessage.append(newImage)
         })

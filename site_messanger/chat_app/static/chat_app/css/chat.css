@@ -113,3 +113,7 @@
     width: 50vw;
     background-color: white;
 }
+
+.chat-image{
+    max-width: 150px;
+}

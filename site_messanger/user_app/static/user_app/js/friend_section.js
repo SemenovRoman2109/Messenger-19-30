@@ -32,6 +32,7 @@ async function loadSection(section, page) {
     // currentSectionLoadLine.insertAdjacentHTML('beforebegin', data.html)
     createActionButtonEvent()
     isLoading = false
+    presenceSocket.send("get_online")
 }
 
 async function openSection(section){

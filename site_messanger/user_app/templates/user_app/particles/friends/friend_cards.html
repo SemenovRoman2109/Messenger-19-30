@@ -1,6 +1,8 @@
 {% for user in users %}
     <div class="user">
         <h3>{{ user.email }}</h3>
+        <div class = 'online-marker' data-id = '{{ user.id }}' ></div>
+
         {% if section == "requests" %}
             <button data-url="{% url 'friends_actions' 'accept' user.id %}" class="friend-action-btn">Підтвердити</button>
             <button data-url="{% url 'friends_actions' 'delete' user.id %}" class="friend-action-btn">Відхилити</button>

@@ -3,6 +3,7 @@
     {% for chat_data in individual_chats %}
         <button class="chat chat-user-button" data-id="{{ chat_data.chat_id }}">
             {{ chat_data.other_user.email }}
+            <div class = 'online-marker' data-id = '{{ chat_data.other_user.id }}' ></div>
         </button>
     {% endfor %}
 </section>
