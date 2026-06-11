@@ -11,6 +11,11 @@ class PresenceConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
+        self.user_group_name = f'user_{self.user.id}'
+        await self.channel_layer.group_add(
+            self.user_group_name,
+            self.channel_name
+        )
         await self.accept()
         if self.user.id in online_users:
             online_users[self.user.id] += 1
@@ -35,6 +40,11 @@ class PresenceConsumer(AsyncWebsocketConsumer):
             self.room_group_name, 
             self.channel_name
         )
+        await self.channel_layer.group_discard(
+            self.user_group_name, 
+            self.channel_name
+        )
+        
         online_users[self.user.id] -= 1
         if online_users[self.user.id] <= 0:
             del online_users[self.user.id]
@@ -56,4 +66,7 @@ class PresenceConsumer(AsyncWebsocketConsumer):
 
 
     async def send_status(self, data):
+        await self.send(text_data= json.dumps(data))
+
+    async def send_message(self, data):
         await self.send(text_data= json.dumps(data))

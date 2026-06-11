@@ -117,3 +117,10 @@
 .chat-image{
     max-width: 150px;
 }
+
+.unread{
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    background-color: rgb(159, 159, 241);
+}

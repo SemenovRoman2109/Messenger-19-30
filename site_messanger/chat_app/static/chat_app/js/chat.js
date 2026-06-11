@@ -6,9 +6,13 @@ const friendDivs = document.querySelectorAll(".friend-div")
 const csrfToken = document.querySelector("meta[name='csrfToken']").content
 const messages = document.querySelector('#messages')
 const loadLine = document.querySelector("#load-message-line")
+const groupHeader = document.querySelector("#groupHeader")
 let pageNumber = 1
 let chatId = null
 let observer = null
+
+let listOnlineGroupUsers = null
+let listGroupUsers = null
 
 async function loadMessages(){
     const response = await fetch(
@@ -53,6 +57,39 @@ function createMessage(sender, text, date, time, images, isNew = true){
     }
 }
 
+function updateGroupUsers(id, status){
+    if (listGroupUsers != null){
+        if (listGroupUsers.includes(id)){
+            if (status == false && listOnlineGroupUsers.includes(id)){
+                listOnlineGroupUsers.splice(listOnlineGroupUsers.indexOf(id), 1)
+            }
+            else if (!listOnlineGroupUsers.includes(id)){
+                listOnlineGroupUsers.push(id)
+            }
+            groupHeader.querySelector("p").textContent = `${listGroupUsers.length} учасники, ${listOnlineGroupUsers.length} в мережі`
+        } 
+    }
+}
+
+async function getGroupUsers(id){
+    groupHeader.innerHTML = ''
+    
+    listOnlineGroupUsers = null
+    listGroupUsers = null
+
+    const response = await fetch(`/chat/${id}/getGroupUsers/`)
+    const data = await response.json()
+    if (data.success){
+        listGroupUsers = data.users_id
+        listOnlineGroupUsers = data.online_users_id
+
+        groupHeader.innerHTML = `
+            <h3>${data.name}</h3>
+            <p>${data.users_id.length} учасники, ${data.online_users_id.length} в мережі</p>
+        `
+    }
+}
+
 function openChat(id){
     notSelectContainer.style.display = "none"
     chat.style.display = "flex"
@@ -65,6 +102,7 @@ function openChat(id){
         messages.scrollTop = messages.scrollHeight
         startObserveMessage()
     })
+    getGroupUsers(id)
     if (chatSocket){
         chatSocket.close()
     }

@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+from user_app.consumers import online_users
 import json
 # Create your views here.
 
@@ -58,6 +59,8 @@ class GetMessagesView(LoginRequiredMixin, View):
             else:
                 message_data_list = []
                 for message in message_list:
+                    if message.sender != request.user: 
+                        message.readers.add(request.user)
                     list_url_image = []
                     for image in message.images.all():
                         list_url_image.append(image.image.url)
@@ -133,4 +136,22 @@ class CreateMessageView(LoginRequiredMixin, View):
             )
             
             return JsonResponse({"success": True})
+        return JsonResponse({"success": False})
+    
+class GetGroupUsers(LoginRequiredMixin, View):
+    def get(self, request, id):
+        chat = Chat.objects.filter(id = id, users = request.user).first()
+        if chat != None and chat.is_group:
+            users_id = []
+            online_users_id = []
+            for user in chat.users.all():
+                users_id.append(user.id)
+                if user.id in online_users:
+                    online_users_id.append(user.id)
+            return JsonResponse({
+                "success": True,
+                'name': chat.name,
+                'users_id': users_id,
+                'online_users_id': online_users_id,
+            })
         return JsonResponse({"success": False})
