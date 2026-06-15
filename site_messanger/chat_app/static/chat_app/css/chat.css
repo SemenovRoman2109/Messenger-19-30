@@ -124,3 +124,10 @@
     border-radius: 100%;
     background-color: rgb(159, 159, 241);
 }
+
+.main-unread{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background-color: rgb(220, 9, 9);
+}

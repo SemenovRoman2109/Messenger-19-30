@@ -1,8 +1,13 @@
+{% load get_chat_data %}
 <section class="chat-block" id="group-chats">
     <h2>Групові чати</h2>
     {% for chat in group_chats %}
         <button class="chat chat-user-button" data-id="{{ chat.id }}">
             {{ chat.name}}
+            {% get_unreaded_messages chat.id user as count %}
+            {% if count > 0%}
+                <h6 class="unread">{{ count }}</h6>
+            {% endif %}
         </button>
     {% endfor %}
 </section>

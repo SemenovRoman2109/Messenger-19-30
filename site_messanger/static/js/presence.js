@@ -26,13 +26,12 @@ presenceSocket.onmessage = (event) =>{
                 if(unread){
                     unread.textContent = Number(unread.textContent) + 1
                 }else{
-                    console.log("add");
-                    
                     const newUnread = document.createElement('h6')
                     newUnread.classList.add('unread')
                     newUnread.textContent = 1
                     btn.append(newUnread)
                 }
+                renderCountUnreadedMessages()
             }
         })
     }else{

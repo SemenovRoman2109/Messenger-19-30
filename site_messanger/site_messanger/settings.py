@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os, dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'chat_app',
     'user_app',
-    'post_app'
+    'post_app',
+    "cloudinary",
+    "cloudinary_storage"
 ]
 
 MIDDLEWARE = [
@@ -141,3 +144,20 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR/ 'media'
 
 LOGIN_URL = '/auth/'
+
+dotenv.load_dotenv()
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv(key='CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv(key= 'CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv(key='CLOUDINARY_API_SECRET')
+}
+
+STORAGES = {
+    'default': {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage"
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    }
+}

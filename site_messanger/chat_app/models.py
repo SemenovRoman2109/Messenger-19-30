@@ -12,6 +12,7 @@ class Chat(models.Model):
     def __str__(self):
         return f"<Chat: {self.name}>"
     
+    
 class Message(models.Model):
     text = models.CharField(max_length=255, blank=True, null=True)
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="messages")

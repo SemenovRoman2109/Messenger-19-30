@@ -1,9 +1,14 @@
+{% load get_chat_data %}
 <section class="chat-block" id="indiv-chats">
     <h2>Повідомлення</h2>
     {% for chat_data in individual_chats %}
         <button class="chat chat-user-button" data-id="{{ chat_data.chat_id }}">
             {{ chat_data.other_user.email }}
             <div class = 'online-marker' data-id = '{{ chat_data.other_user.id }}' ></div>
+            {% get_unreaded_messages chat_data.chat_id user as count %}
+            {% if count > 0%}
+                <h6 class="unread">{{ count }}</h6>
+            {% endif %}
         </button>
     {% endfor %}
 </section>

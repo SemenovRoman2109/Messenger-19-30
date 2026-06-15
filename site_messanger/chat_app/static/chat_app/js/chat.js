@@ -14,6 +14,25 @@ let observer = null
 let listOnlineGroupUsers = null
 let listGroupUsers = null
 
+function renderCountUnreadedMessages(){
+    for (const containerName of ["indiv-chats", "group-chats"]){
+        const unreadeds = document.querySelectorAll(`#${containerName} .unread`)
+        console.log(unreadeds);
+        
+        let globalCount = 0
+        unreadeds.forEach(unreaded => {
+            globalCount += Number(unreaded.textContent)
+        })
+        if (globalCount > 0){
+            document.querySelector(`#${containerName} h2`).innerHTML = `Повідомлення <div class = "main-unread">${globalCount}</div>`
+        }else{
+            document.querySelector(`#${containerName} h2`).innerHTML = `Повідомлення`
+        }
+    }
+}
+
+renderCountUnreadedMessages()
+
 async function loadMessages(){
     const response = await fetch(
         `/chat/${chatId}/getMessages/?page=${pageNumber}`,
@@ -106,6 +125,13 @@ function openChat(id){
     if (chatSocket){
         chatSocket.close()
     }
+    const selectedChat = document.querySelector(`.chat[data-id="${id}"]`)
+    const unreadCount = selectedChat.querySelector('.unread')
+    if (unreadCount){
+        unreadCount.remove()
+    }
+    renderCountUnreadedMessages()
+    
     let url = `ws://${window.location.host}/chat/${id}`;
     chatSocket = new WebSocket(url)
     chatSocket.onmessage = (event)=>{
