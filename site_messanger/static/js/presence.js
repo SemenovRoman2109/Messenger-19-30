@@ -44,7 +44,12 @@ presenceSocket.onmessage = (event) =>{
                 marker.classList.remove('active-marker')
             }
         }
-        }) 
-        updateGroupUsers(data.user_id, data.status)
+        })
+        try{
+            updateGroupUsers(data.user_id, data.status)
+        }
+        catch{
+            
+        }
     }
 }

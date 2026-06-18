@@ -8,7 +8,7 @@ from .utils.friends import get_friends_by_section
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from .utils.friends_actions import *
-
+from profile_app.models import *
 
 # Create your views here.
 class AuthView(TemplateView):
@@ -24,7 +24,8 @@ class RegisterView(View):
     def post(self, request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            profile = Profile.objects.create(user = user)
             return JsonResponse(data={
                 "success": True
             })

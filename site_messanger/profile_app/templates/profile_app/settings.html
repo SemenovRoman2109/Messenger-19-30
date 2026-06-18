@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block links%}
+    <link rel="stylesheet" href="{% static 'profile_app/css/settings.css' %}">
+{% endblock%}
+
+{% block content%}
+    {% include 'profile_app/particles/profile_card.html'%}
+    {% include 'profile_app/particles/info_card.html'%}
+    {% include 'profile_app/particles/signature_card.html'%}
+{% endblock%}
+
+{% block scripts %}
+    <script src="{% static 'profile_app/js/settings.js' %}"></script>
+{% endblock %}

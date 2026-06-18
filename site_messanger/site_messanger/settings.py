@@ -43,8 +43,9 @@ INSTALLED_APPS = [
     'chat_app',
     'user_app',
     'post_app',
+    'profile_app',
     "cloudinary",
-    "cloudinary_storage"
+    "cloudinary_storage",
 ]
 
 MIDDLEWARE = [

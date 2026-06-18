@@ -1,0 +1,23 @@
+{% load static %}
+
+<form method="post" action = "{% url 'update_profile' %}" id = 'profile-form' enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>Картка профілю</p>
+    <button type="button" class = 'edit visible-save'>Редагувати інформацію</button>
+    <button type = 'submit' class = 'save visible-edit'>Зберегти</button>
+    <p class = 'visible-edit'>Завантажте фото профілю</p>
+    
+    {% if user.profile.avatar%}
+        <img src = '{{ user.profile.avatar.url}}'>
+    {% else %}
+        <img src = '{% static "profile_app/img/anonim.png"%}'>
+    {% endif%}
+    <button type="button" id = 'select-avatar' class = 'visible-edit'>Додати фото</button>
+    <input type="file" name="file" accept="image/*" style="display: none;" id="fileInput">
+    <h3>{{ user.first_name}} {{ user.last_name}}</h3>
+    <p class="visible-save">{{user.username}}</p>
+    <div class = 'visible-edit'>
+        <p>Ім'я користувача</p>
+        <input name = 'username' type = 'text' value="{{user.username}}">
+    </div>
+</form>

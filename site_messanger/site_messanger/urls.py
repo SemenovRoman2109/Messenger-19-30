@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('chat/', include("chat_app.urls")),
     path('auth/', include("user_app.urls")),
-    path('post/', include("post_app.urls"))
+    path('post/', include("post_app.urls")),
+    path('profile/', include("profile_app.urls"))
     
 ]
 if settings.DEBUG:

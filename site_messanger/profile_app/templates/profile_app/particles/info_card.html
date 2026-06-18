@@ -1,0 +1,25 @@
+{% load static %}
+
+<form method="post" action = "{% url 'update_info' %}" id = 'profile-info-form'>
+    {% csrf_token %}
+    <p>Особиста інформація</p>
+    <button type="button" class = 'edit visible-save'>Редагувати інформацію</button>
+    <button type = 'submit' class = 'save visible-edit'>Зберегти</button>
+    <div class="visible-dissable">
+        <label for="first_name">Ім'я</label>
+        <input name="first-name" class="visible-edit input" id="first_name" value="{{ user.first_name }}">
+        <p class="visible-save input">{{ user.first_name }}</p>
+
+        <label for="last_name">Прізвище</label>
+        <input name="last-name" class="visible-edit input" id="last_name" value="{{ user.last_name }}">
+        <p class="visible-save input">{{ user.last_name }}</p>
+
+        <label for="date">Дата народження</label>
+        <input name="date" class="visible-edit input" type="date" id="date" value="{{ user.profile.birth_date }}">
+        <p class="visible-save input">{{ user.profile.birth_date }}</p>
+
+        <label for="email">Електронна пошта</label>
+        <input name="email" class="visible-edit input" id="email" value="{{ user.email }}">
+        <p class="visible-save input">{{ user.email }}</p>
+    </div>
+</form>
