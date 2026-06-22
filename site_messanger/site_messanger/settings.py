@@ -24,14 +24,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w8d+7es2_s_u_y1r&v71#*k)(0s@$40)qrg913c0u@(9%y#t1$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.up.railway.app"
+]
+
+#               Налаштування проєкту для деплою на railway 
+# Деплой - процес запуску проєкту на віддаленом сервері (в публічному доступі)
+# uvicorn та gunicorn - модулі які необхідно встановити для асинхронної роботи сервера
+# Procfile - файл, в якому написано команду для запуску проєкту
+# DEBUG - в settings, режим розробника
+# ALLOWED_HOSTS = ["*"] - дозволяє відправити запит на сайт з будь-якої адреси
+# CSRF_TRUSTED_ORIGINS = ["https://*.up.railway.app"] - дозволяє використовувати csrf_token з railway
+
+# whitenoise - модуль для налаштувань статичних файлів
+# В MIDDLEWARE додати - 'whitenoise.middleware.WhiteNoiseMiddleware' 
+# Замість STATICFILES_DIRS -> STATIC_ROOT = BASE_DIR / 'staticfiles'
+# В STORAGES, за ключем staticfiles -> 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Application definition
 
-# Для асинхронної роботи сервера до INSTALLED_APPS додати 'daphne'
 INSTALLED_APPS = [
     'daphne',
     'django.contrib.admin',
@@ -50,6 +65,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -124,7 +140,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR/'static']
+# STATICFILES_DIRS = [BASE_DIR/'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -159,6 +176,6 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage"
     },
     'staticfiles': {
-        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     }
 }
