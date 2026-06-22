@@ -1,0 +1,11 @@
+.online-marker{
+    height: 12px;
+    width: 12px;
+    border-radius: 100%;
+    background-color: gray;
+    border: white solid 1px;
+}
+
+.active-marker{
+    background-color: rgb(0, 196, 0);
+}
