@@ -1,1 +1,1 @@
-web: daphne site_messanger.site_messanger.asgi:application --port $PORT --bind 0.0.0.0
+web: daphne site_messanger.asgi:application --port $PORT --bind 0.0.0.0

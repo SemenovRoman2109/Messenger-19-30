@@ -11,8 +11,8 @@ import os
 
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
-from site_messanger.chat_app.routing import websockets_urlpatterns
-from site_messanger.user_app.routing import user_websockets_urlpatterns
+from chat_app.routing import websockets_urlpatterns
+from user_app.routing import user_websockets_urlpatterns
 from channels.auth import AuthMiddlewareStack
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'site_messanger.settings')
