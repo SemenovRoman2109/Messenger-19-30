@@ -132,7 +132,7 @@ function openChat(id){
     }
     renderCountUnreadedMessages()
     
-    let url = `ws://${window.location.host}/chat/${id}`;
+    let url = `wss://${window.location.host}/chat/${id}`;
     chatSocket = new WebSocket(url)
     chatSocket.onmessage = (event)=>{
         const data = JSON.parse(event.data)

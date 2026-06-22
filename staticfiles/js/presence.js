@@ -1,4 +1,4 @@
-const url = `ws://${window.location.host}/presence/`;
+const url = `wss://${window.location.host}/presence/`;
 const presenceSocket = new WebSocket(url)
 
 presenceSocket.onmessage = (event) =>{
