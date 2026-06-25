@@ -1,0 +1,46 @@
+{% load static %}
+
+<form method="post" action = "{% url 'update_signature' %}" enctype="multipart/form-data" id = 'profile-info-form'>
+    {% csrf_token %}
+    <p>Варіанти підпису</p>
+    <button type="button" class = 'edit visible-save'>Редагувати інформацію</button>
+    <button type = 'submit' class = 'save visible-edit'>Зберегти</button>
+    <button type = 'button' class = 'cancel visible-edit'>Скасувати</button>
+    <div class="visible-dissable dissable">
+        {% if user.profile.is_text_signature %}
+            <input class = 'visible-edit checkbox' checked type = 'checkbox' name = 'is_text_signature'>
+        {% else %}
+            <input class = 'visible-edit checkbox' type = 'checkbox' name = 'is_text_signature'>
+        {% endif %}
+        <label for="pseudonym">  
+            <div class = 'checkbox visible-save'>
+                {% if user.profile.is_text_signature %}
+                    <img src = '{% static "profile_app/img/check.svg" %}'>
+                {% endif %}
+            </div>
+            Псевдонім автора
+        </label>
+        <p class = 'visible-save'>{{ user.profile.pseudonym }}</p>
+        <input name="pseudonym" class="visible-edit input" id="pseudonym" value="{{ user.profile.pseudonym }}">
+        
+        <br>
+        {% if user.profile.is_image_signature %}
+            <input class = 'visible-edit checkbox' checked type = 'checkbox' name = 'is_image_signature'>
+        {% else %}
+            <input class = 'visible-edit checkbox' type = 'checkbox' name = 'is_image_signature'>
+        {% endif %}
+        <label for="signature">  
+            <div class = 'checkbox visible-save'>
+                {% if user.profile.is_image_signature %}
+                    <img src = '{% static "profile_app/img/check.svg" %}'>
+                {% endif %}
+            </div>
+            Мій електронний підпис
+        </label>
+        {% if user.profile.signature %}
+            <img src = '{{ user.profile.signature.url }}'>
+        {% endif %}
+        <input name="signature" class="visible-edit input" id="signature" type = 'file' accept="image/*">
+
+    </div>
+</form>

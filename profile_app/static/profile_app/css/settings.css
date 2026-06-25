@@ -12,3 +12,10 @@
     border: 1px solid black;
     border-radius: 5px;
 }
+
+.checkbox{
+    width: 15px;
+    border-radius: 5px;
+    height: 15px;
+    border: 2px solid black;
+}
